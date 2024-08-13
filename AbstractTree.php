@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Базовый класс дерева
+ */
 abstract class AbstractTree
 {
-    private readonly int $id;
+    private readonly string $id;
     private array $fruits = [];
     final public function __construct(int $id)
     {
@@ -15,7 +18,7 @@ abstract class AbstractTree
         return count($this->fruits);
     }
 
-    final public function getId(): int
+    final public function getId(): string
     {
         return $this->id;
     }
@@ -25,7 +28,18 @@ abstract class AbstractTree
         return $this->fruits;
     }
 
+    /**
+     * Задать количество фруктов на дереве
+     *
+     * @return int
+     */
     protected abstract function specifyFruitQuantity(): int;
+
+    /**
+     * Задать вес фрукта
+     *
+     * @return int
+     */
     protected abstract function getFruitWeight(): int;
 
     /**
@@ -41,6 +55,11 @@ abstract class AbstractTree
 
     }
 
+    /**
+     * Создаем фрукты для дерева и сохраняем
+     *
+     * @return void
+     */
     public function buildFruits(): void
     {
         for ($counter = 0; $counter < $this->specifyFruitQuantity(); $counter++) {
@@ -48,8 +67,21 @@ abstract class AbstractTree
         }
     }
 
+    /**
+     * Получить максимальный вес фрукта
+     *
+     * @return int
+     */
     public function getMaxFruitWeight(): int
     {
+        if (count($this->fruits) === 1) {
+            return $this->fruits[0];
+        }
+
+        if (count($this->fruits) === 0) {
+            return 0;
+        }
+
         return max($this->fruits);
     }
 }

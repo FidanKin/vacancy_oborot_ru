@@ -2,8 +2,7 @@
 
 class AppleTree extends AbstractTree
 {
-
-    public function getFruitQuantity(): int
+    protected function specifyFruitQuantity(): int
     {
         return rand(40, 50);
     }

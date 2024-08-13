@@ -1,30 +1,63 @@
 <?php
 
+/**
+ * Класс, который выполняем подсчеты по всем деревьям сада
+ */
 class Collector
 {
+
+    /**
+     * @var array{all, array{types}}
+     */
     private array $fruitsQuantity;
+    /**
+     * @var array{all, array{types}}
+     */
     private array $fruitsWeight;
+    /**
+     * @var array{weight, tree_id}
+     */
     private array $biggestFruit;
     public function __construct(private GardenGenerator $garden)
     {
 
     }
 
-    public function getFruitsQuantity(): array
+    /**
+     * Произвести необходимые вычисления с деревьями
+     * @return void
+     */
+    public function calculate(): void
     {
-        $quantity = [];
-        $quantity['all'] = 0;
-        $quantity['types'] = [];
-
         foreach ($this->garden->getTrees() as $tree) {
             $this->updateFruitsQuantity($tree);
             $this->updateFruitsWeight($tree);
             $this->updateMaxFruitWeight($tree);
         }
-
-        return $quantity;
     }
 
+    public function getFruitsQuantity(): array
+    {
+        $this->fruitsQuantity;
+        return $this->fruitsQuantity;
+    }
+
+    public function getFruitsWeight(): array
+    {
+        return $this->fruitsWeight;
+    }
+
+    public function getMaxFruitWeight(): array
+    {
+        return $this->biggestFruit;
+    }
+
+    /**
+     * Обновить общее количество фруктов, получив дерево
+     * @param \AbstractTree $tree
+     *
+     * @return void
+     */
     private function updateFruitsQuantity(AbstractTree $tree): void
     {
         $type = $tree->getTreeType();
@@ -41,6 +74,12 @@ class Collector
         $this->fruitsQuantity['types'][$type] += $quantity;
     }
 
+    /**
+     * Обновить общий вес фруктов, получим дерево
+     * @param \AbstractTree $tree
+     *
+     * @return void
+     */
     private function updateFruitsWeight(AbstractTree $tree): void
     {
         $type = $tree->getTreeType();
@@ -58,6 +97,12 @@ class Collector
         $this->fruitsWeight['types'][$type] += $fruitsWeight;
     }
 
+    /**
+     * Обновить максимальный вес фрукта
+     * @param \AbstractTree $tree
+     *
+     * @return void
+     */
     private function updateMaxFruitWeight(AbstractTree $tree): void {
         if (empty($this->biggestFruit)) {
             $this->biggestFruit['tree_id'] = '';

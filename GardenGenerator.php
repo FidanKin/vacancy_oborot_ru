@@ -13,6 +13,11 @@ class GardenGenerator
      */
     private array $trees = [];
 
+    /**
+     * @param array $treesDefinition - правило для каждого типа дерева, массив вида - [$treetype => $quantity]
+     *
+     * @throws \Exception
+     */
     public function __construct(array $treesDefinition)
     {
         if (! $this->validateTrees(array_keys($treesDefinition))) {
@@ -22,10 +27,20 @@ class GardenGenerator
         $this->treesDefinition = $treesDefinition;
     }
 
+    /**
+     * Проверяем, что заданы допустимые типы деревьев
+     *
+     * @param array $types
+     *
+     * @return bool
+     */
     private function validateTrees(array $types): bool
     {
         $intersect = array_intersect($this->allowedTrees(), $types);
-        if (count($types) > count($this->allowedTrees()) && count($intersect) < count($this->allowedTrees())) {
+        $typeCount = count($types);
+        $allowedCount = count($this->allowedTrees());
+
+        if ($typeCount > $allowedCount || count($intersect) !== count($types)) {
             return false;
         }
 
@@ -37,6 +52,11 @@ class GardenGenerator
         return ['apple', 'pear'];
     }
 
+    /**
+     * Создаем деревья
+     *
+     * @return void
+     */
     public function seedTrees(): void
     {
         $aliases = $this->aliases();

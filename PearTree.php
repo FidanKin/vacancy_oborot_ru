@@ -3,7 +3,7 @@
 class PearTree extends AbstractTree
 {
 
-    public function getFruitQuantity(): int
+    public function specifyFruitQuantity(): int
     {
         return rand(0, 20);
     }
