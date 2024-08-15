@@ -1,0 +1,16 @@
+{
+    "name": "anna/oborot.ru2",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^11.3"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "authors": [
+        {
+            "name": "synbulatov-nesterov"
+        }
+    ],
+    "require": {}
+}
